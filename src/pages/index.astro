@@ -1,16 +1,63 @@
 ---
-
+import Footer from "@/features/home/footer.astro";
+import Gallery from "@/features/home/gallery.astro";
+import Header from "@/features/home/header.astro";
+import Hero from "@/features/home/hero.astro";
+import Base from "@/layout/base.astro";
+import "@/styles/global.css";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base>
+  <!-- Navbar -->
+  <main class="home grow font-Rubik space-y-12 md:space-y-24">
+    <Header />
+    <Hero />
+    <Gallery />
+    <Footer />
+  </main>
+</Base>
+
+<style>
+  @font-face {
+    font-family: "Red Hat";
+    font-weight: 500, 600, 800, 900;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/RedHat/RedHatText-VariableFont_wght.ttf");
+  }
+
+  .home {
+    letter-spacing: clamp(-0.05em, calc((1em - 1rem) / -10), 0em);
+
+    font-family: "Red Hat", fantasy;
+    background-color: var(--color-home-background);
+    background-image: linear-gradient(#00000015 2px, transparent 2px),
+      linear-gradient(to right, #00000015 2px, var(--color-home-background) 2px);
+    background-size: 80px 80px;
+
+    h1 {
+      font-size: 3.5rem;
+      font-size: clamp(2.25rem, 3vw + 1.795rem, 4.5rem);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tighter);
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-size: clamp(1rem, 1.5vw + 0.8rem, 1.5rem);
+      font-weight: 700;
+      letter-spacing: var(--tracking-tightc);
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+      font-weight: 600;
+    }
+
+    p {
+      font-size: clamp(1rem, 1vw + 0.7rem, 1.15rem);
+      line-height: normal;
+    }
+  }
+</style>

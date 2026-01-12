@@ -1,0 +1,88 @@
+---
+import { ALL_TECH } from "@/lib/constants";
+import Badge from "./badge.astro";
+import Search from "@lucide/astro/icons/search";
+---
+
+<section class="px-6 lg:px-0 mx-auto max-w-4xl w-full space-y-30 text-center">
+  <h1 class="font-black! text-center">
+    Colección de soluciones a retos y <span class="text-home-primary"
+      >proyectos de Javascript</span
+    >
+  </h1>
+  <!-- Chips -->
+  <div id="tech-badges" class="flex flex-wrap justify-center gap-3 max-w-xl mx-auto ">
+    <Badge tech={{ id: "all", name: "All", bg: "#000", color: "#fff" }} isAll />
+    {ALL_TECH.map((t) => <Badge tech={t} />)}
+  </div>
+</section>
+
+<script>
+  const container = document.getElementById("tech-badges");
+  const badges = Array.from(
+    container.querySelectorAll<HTMLElement>(".tech-badge")
+  );
+
+  let activeTechs = ["all"];
+
+  //utils
+  const setActive = (element: HTMLElement, active: boolean = true) => {
+    element.dataset.active = active ? "true" : "else";
+  };
+
+  const notifyFilters = () => {
+    const detail = {
+      activeTechs: [...activeTechs],
+    };
+    window.dispatchEvent(new CustomEvent("filters:change", { detail }));
+  };
+
+  //main
+  if (!activeTechs || activeTechs.length === 0) activeTechs = ["all"];
+
+  badges?.forEach((el) => {
+    el.addEventListener("click", () => {
+      // id of tech clicked
+      const target: string = el.dataset.tech || "";
+
+      //if id == "all" was clicked
+      if (target === "all") {
+        badges.forEach((btn) => setActive(btn, false));
+        setActive(el);
+        activeTechs = ["all"];
+      } else {
+        // remove all button
+        const allButton = document.querySelector(
+          '.tech-badge[data-tech="all"]'
+        ) as HTMLElement;
+        setActive(allButton, false);
+
+        // if item is active already
+        if (el.dataset.active == "true") {
+          setActive(el, false);
+
+          activeTechs = activeTechs.filter((tech) => tech !== target);
+
+          // If no services selected, reactivate "All Services"
+          if (activeTechs.length === 0) {
+            setActive(allButton);
+            activeTechs = ["all"];
+          }
+        } else {
+          // if item isnt active
+          setActive(el);
+          if (activeTechs?.includes("all")) {
+            activeTechs = [target];
+          } else {
+            activeTechs.push(target);
+          }
+        }
+      }
+      notifyFilters();
+    });
+  });
+
+  window.addEventListener("filters:request", () => {
+    notifyFilters();
+  });
+</script>

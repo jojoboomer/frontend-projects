@@ -1,0 +1,29 @@
+---
+import type { Tech } from "@/lib/constants";
+import X from "@lucide/astro/icons/x";
+
+interface Props {
+  tech: Tech;
+  isAll?: boolean;
+}
+
+const { tech, isAll = false } = Astro.props;
+const isActive = false;
+---
+
+<span
+  class="tech-badge text-sm inline-flex items-center justify-center px-4 py-2 font-semibold border-2 border-black shadow-[2px_2px_0_0] bg-white transition-all duration-300 cursor-pointer "
+  data-tech={tech.id}
+  data-active={tech.id === "all"}
+>
+  <p class="text-sm text-back whitespace-nowrap">{tech.name}</p>
+
+  {isActive && <X class="size-4 ms-1.5 -me-1 inline-block" />}
+</span>
+
+<style>
+  .tech-badge[data-active="true"] {
+    background-color: var(--color-home-primary);
+    color: black;
+  }
+</style>

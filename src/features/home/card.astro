@@ -1,0 +1,65 @@
+---
+import type { Project } from "@/lib/constants";
+import { Code, Eye } from "@lucide/astro";
+
+interface Props {
+  data: Project;
+}
+const { data } = Astro.props;
+---
+
+<article
+  class="group flex flex-col border-2 border-black bg-white shadow-[4px_4px_0_0] transition-all duration-150 ease-in-out hover:shadow-[0_0_0_0] hover:translate-1"
+>
+  <!-- image -->
+  <img
+    src={data.img}
+    alt={data.title}
+    class="w-full aspect-video object-cover border-b-2 border-black"
+  />
+  <!-- description -->
+  <div class="flex-1 py-3 px-5 space-y-1.5">
+    <h3 >
+      {data.title}
+    </h3>
+
+    <p class="line-clamp-3 text-pretty leading-normal">
+      {data.description}
+    </p>
+
+    <div class="flex items-center gap-2 mt-4">
+      {
+        data.tech?.map((tech) => (
+          <span
+            data-filter={tech.id}
+            class="card-tech px-2 py-0.5 text-sm font-semibold uppercase tracking-wide"
+            style={{ backgroundColor: tech.bg, color: tech.color }}
+          >
+            {tech.name}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  <!-- footer -->
+  <div class="card-actions border-t-2 border-black flex items-center justify-end py-2 px-5">
+    <div class="flex items-center gap-2">
+      <a
+        class="inline-flex py-1 px-2 gap-1 text-black transition-colors border-2 border-black p-1 hover:bg-home-primary hover:text-white"
+        href={data.code}
+        title="Ir al código"
+      >
+        <Code />
+        <span class="hidden md:block font-semibold">Code</span>
+      </a>
+      <a
+        class="inline-flex py-1 px-2 gap-1 text-black transition-colors border-2 border-black p-1 hover:bg-home-primary hover:text-white"
+        href={data.link}
+        title="Ir al sitio"
+      >
+        <Eye />
+        <span class="hidden md:block font-semibold">Demo</span>
+      </a>
+    </div>
+  </div>
+</article>

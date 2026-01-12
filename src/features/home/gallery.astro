@@ -1,0 +1,119 @@
+---
+import Card from "@/features/home/card.astro";
+import { PROJECTS } from "@/lib/constants";
+import Grid from "@lucide/astro/icons/grid-2x2";
+import List from "@lucide/astro/icons/list";
+---
+
+<section class="px-6 lg:px-0 max-w-6xl mx-auto">
+  <header class="flex justify-between items-end mb-6">
+    <h2 class="text-black">SOLUTIONS</h2>
+    <div class="hidden md:inline-flex gap-2">
+      <button
+        data-mode="grid"
+        class="p-2 text-black bg-white border-2 border-black hover:text-white hover:bg-home-primary transition-colors shadow-[2px_2px_0_0]"
+      >
+        <Grid />
+      </button>
+      <button
+        data-mode="list"
+        class="p-2 text-black bg-white border-2 border-black hover:text-white hover:bg-home-primary transition-colors shadow-[2px_2px_0_0]"
+      >
+        <List />
+      </button>
+    </div>
+  </header>
+  <div
+    id="project-grid"
+    class="transition-all duration-300 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+  >
+    {
+      PROJECTS.map((p) => {
+        return <Card data={p} />;
+      })
+    }
+  </div>
+</section>
+
+<script>
+  const grid = document.querySelector("#project-grid");
+  const modeButtons = document.querySelectorAll("button[data-mode]");
+
+  // gallery view mode
+  modeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const mode = btn.dataset.mode;
+      const isClickedMode = grid?.classList.contains(
+        mode == "list" ? "flex" : "grid"
+      );
+
+      if (isClickedMode) return;
+
+      if (mode == "grid") {
+        grid?.classList.add(
+          "grid",
+          "grid-cols-1",
+          "md:grid-cols-2",
+          "lg:grid-cols-3"
+        );
+        grid?.classList.remove("flex", "flex-col");
+      } else {
+        grid?.classList.add("flex", "flex-col");
+        grid?.classList.remove(
+          "grid",
+          "grid-cols-1",
+          "md:grid-cols-2",
+          "lg:grid-cols-3"
+        );
+      }
+    });
+  });
+
+  // Selector para items del grid. Ajusta si tu markup es distinto.
+  const galleryItems = () =>
+    Array.from(document.querySelectorAll<HTMLElement>(".gallery-item"));
+
+  const matchesFilter = (
+    item: HTMLElement,
+    activeTechs: string[],
+    query: string
+  ) => {
+    // search item tech
+    const badges = item.querySelectorAll(".card-tech");
+    const techs: string[] = [];
+    badges.forEach((e) => {
+      techs.push(e.dataset.filter);
+    });
+
+    const techMatch =
+      activeTechs.includes("all") || techs.some((t) => activeTechs.includes(t));
+
+    // text matching (title or content)
+    const title = (item.dataset.title || item.textContent || "").toLowerCase();
+    const q = (query || "").toLowerCase();
+    const textMatch = q === "" || title.includes(q);
+
+    return techMatch && textMatch;
+  };
+
+  const onFiltersChange = (e: Event) => {
+    const detail = (e as CustomEvent).detail || {};
+    const { activeTechs = ["all"], query = "" } = detail;
+
+    galleryItems().forEach((item) => {
+      if (matchesFilter(item, activeTechs, query)) {
+        item.style.display = ""; // mostrar (usa grid layout de CSS)
+      } else {
+        item.style.display = "none";
+      }
+    });
+  };
+
+  // inicial: aplica filtros si ya hubo notificación al cargar
+  window.addEventListener("filters:change", onFiltersChange);
+
+  // opcional: lanzar una vez al inicio para sincronizar con estado actual
+  // (esto cubre el caso en que Hero ya despachó antes)
+  const initEvent = new CustomEvent("filters:request");
+  window.dispatchEvent(initEvent);
+</script>
