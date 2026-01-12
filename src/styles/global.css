@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@layer reset-panda, base-layer, tokens-panda, recipes-panda, utilities-panda;
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Outfit/Outfit-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("/fonts/Rubik/Rubik-VariableFont_wght");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RedHat";
+  font-weight: 500, 600, 800, 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/RedHat/RedHatText-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Josefin";
+  font-weight: 400, 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf");
+}
+
+/* Lato */
+@font-face {
+  font-family: "Lato";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Lato/Lato-Light.ttf");
+}
+@font-face {
+  font-family: "Lato";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Lato/Lato-Regular.ttf");
+}
+@font-face {
+  font-family: "Lato";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Lato/Lato-Bold.ttf");
+}
+@font-face {
+  font-family: "Lato";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Lato/Lato-Black.ttf");
+}
+
+/* Poppins */
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Poppins/Poppins-Regular.ttf");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Poppins/Poppins-Medium.ttf");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Poppins/Poppins-Bold.ttf");
+}
+
+/* Theme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Font Family */
+  --font-Rubik: "Rubik", monospace;
+  --font-Outfit: "Outfit", monospace;
+  --font-red-hat: "RedHat", serif;
+  --font-lato: "Lato", serif;
+  --font-poppins: "Poppins", monospace;
+  --font-josefin: "Josefin", serif;
+
+  /* Colors */
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* HOME COLORS */
+  --color-home-background: #b6dee8;
+  --color-home-primary: #d16000;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(1 0 180);
+  --foreground: oklch(0.137 0.036 258.526);
+  --muted: oklch(0.968 0.007 247.895);
+  --muted-foreground: oklch(0.555 0.041 257.44);
+  --popover: oklch(1 0 180);
+  --popover-foreground: oklch(0.137 0.036 258.526);
+  --card: oklch(1 0 180);
+  --card-foreground: oklch(0.137 0.036 258.526);
+  --border: oklch(0.929 0.013 255.532);
+  --primary: oklch(0.419 0.199 262.534);
+  --primary-foreground: oklch(0.984 0.003 247.859);
+}
+
+.dark {
+  --radius: 0.5rem;
+  --background: oklch(0.203 0.014 285.102);
+  --foreground: oklch(0.766 0.049 276.035);
+  --muted: oklch(0.286 0.023 278.46);
+  --muted-foreground: oklch(0.566 0.04 279.856);
+  --popover: oklch(0.226 0.019 280.253);
+  --popover-foreground: oklch(0.587 0.041 280.058);
+  --card: oklch(0.226 0.019 280.253);
+  --card-foreground: oklch(0.766 0.049 276.035);
+  --border: oklch(0.396 0.036 278.297);
+  --primary: oklch(0.867 0 180);
+  --primary-foreground: oklch(0.321 0 180);
+} 
