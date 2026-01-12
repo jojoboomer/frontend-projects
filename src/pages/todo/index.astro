@@ -1,0 +1,31 @@
+---
+import MentorAtributtion from "@/components/mentor-atributtion.astro";
+import { TaskList } from "@/features/todo/TaskList";
+import { ThemeToggle } from "@/features/todo/ThemeToggle";
+import { footer, header, listWrapper, main } from "@/features/todo/styles";
+import Base from "@/layout/base.astro";
+import { initializeTheme } from "@/stores/theme-store";
+---
+
+<Base
+  title={"Frontend Mentor | Todo App"}
+  favicon={"./favicon-mentor-32x32.png"}
+>
+  <main class={main}>
+    <div class:list={[listWrapper]}>
+      <header class={header}>
+        <h2>Todo</h2><ThemeToggle client:only="react" />
+      </header>
+      <TaskList client:only="react" />
+      <footer class={footer}><p>Drag and drop to reorder list</p></footer>
+    </div>
+  </main>
+  <Fragment slot="footer">
+    <MentorAtributtion />
+  </Fragment>
+</Base>
+
+<script>
+  import { initializeTheme } from "@/stores/theme-store";
+  initializeTheme();
+</script>
