@@ -1,0 +1,20 @@
+---
+import MentorAtributtion from "@/components/mentor-atributtion.astro";
+import Cart from "@/features/shoping-cart/Cart";
+import Products from "@/features/shoping-cart/Products";
+import { main } from "@/features/shoping-cart/styles.ts";
+import Base from "@/layout/base.astro";
+---
+
+<Base
+  title={"Frontend Mentor | Product list with cart"}
+  favicon={"./favicon-mentor-32x32.png"}
+>
+  <main class={main}>
+    <Products client:only="react" />
+    <Cart client:only="react" />
+  </main>
+  <Fragment slot="footer">
+    <MentorAtributtion />
+  </Fragment>
+</Base>
