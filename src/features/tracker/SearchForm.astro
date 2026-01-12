@@ -1,0 +1,53 @@
+---
+import { flex } from "@styled-system/patterns";
+import InputSearch from "./InputSearch.astro";
+import {
+dataContainer,
+dataSection,
+dataSeparator,
+pattern,
+title,
+} from "./styles";
+---
+
+<section id="ip-form" class={pattern}>
+  <h1 class={title}>IP Address Tracker</h1>
+  <InputSearch
+  containerStyles={flex({
+    width: {
+      base: '20rem',
+      md: "450px",
+    },
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: '400',
+  })}
+    icon={"/images/tracker/arrow.svg"}
+    placeholder="Search for any IP address or domain"
+  />
+  <div class={dataContainer}>
+    <div class={dataSection}>
+      <span class="section-title">IP Address</span><span
+        class="ip-value section-value">192.212.174.101</span
+      >
+    </div>
+    <div class={dataSeparator}></div>
+    <div class={dataSection}>
+      <span class="section-title">Location</span><span
+        class="location-value section-value">Brooklyn, NY 10001</span
+      >
+    </div>
+    <div class={dataSeparator}></div>
+    <div class={dataSection}>
+      <span class="section-title"> Timezone</span><span
+        class="utc-value section-value">UTC -05:00</span
+      >
+    </div>
+    <div class={dataSeparator}></div>
+    <div class={dataSection}>
+      <span class="section-title">ISP</span><span
+        class="isp-value section-value">SpaceX Starlink</span
+      >
+    </div>
+  </div>
+</section>

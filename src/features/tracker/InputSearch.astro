@@ -1,0 +1,29 @@
+---
+import { containerBase, iconBase, iconBtnBase, searchBase } from "./styles";
+
+interface Props {
+  icon: any;
+  placeholder: string;
+  inputStyles?: any;
+  iconStyles?: any;
+  iconBtnStyles?: any;
+  containerStyles?: any;
+  onClick?: any;
+}
+
+const {
+  icon,
+  placeholder,
+  inputStyles = searchBase,
+  containerStyles = containerBase,
+  iconStyles = iconBase,
+  iconBtnStyles = iconBtnBase,
+} = Astro.props;
+---
+
+<div class={containerStyles}>
+  <input class={inputStyles} type="text" placeholder={placeholder} />
+  <button class={iconBtnStyles}
+    ><img src={icon} alt="icon-btn" class={iconStyles} /></button
+  >
+</div>

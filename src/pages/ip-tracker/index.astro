@@ -1,0 +1,114 @@
+---
+import MentorAtributtion from "@/components/mentor-atributtion.astro";
+import SearchForm from "@/features/tracker/SearchForm.astro";
+import { main, map } from "@/features/tracker/styles.ts";
+import Base from "@/layout/base.astro";
+---
+
+<!-- TODO -->
+<Base
+  title={"Frontend Mentor | IP Address Tracker"}
+  favicon={"./favicon-mentor-32x32.png"}
+>
+  <main class={main}>
+    <SearchForm />
+    <div id="map" class={map}></div>
+  </main>
+  <Fragment slot="footer">
+    <MentorAtributtion />
+  </Fragment>
+</Base>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script
+  is:inline
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+
+<script>
+  import { getIp } from "@/features/tracker/ipService";
+
+  const isValidIPv4 = (ipString: string): boolean => {
+    const ipv4Regex =
+      /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return ipv4Regex.test(ipString);
+  };
+
+  const setResult = (
+    status: "success" | "loading" | "error",
+    data: { ip: string; isp?: string | null; location?: any | null }
+  ) => {
+    let ipText = data.ip;
+    let locationText = "Loading...";
+    let utcText = "Loading...";
+    let ispText = "Loading...";
+
+    if (status == "error") {
+      locationText = "Error";
+      utcText = "Error";
+      ispText = "Error";
+    } else if (status == "success") {
+      locationText = data.location.city;
+      utcText = data.location.timezone ? `UTC ${data.location.timezone}` : "";
+      ispText = data.isp || "";
+    }
+
+    ipSpan.innerText = ipText;
+    locationSpan.innerText = locationText;
+    utcSpan.innerText = utcText;
+    ispSpan.innerText = ispText;
+  };
+
+  const form = document.querySelector("#ip-form");
+  const action = form?.querySelector("button");
+  const ipSpan = document.querySelector("span.ip-value") as HTMLSpanElement;
+  const locationSpan = document.querySelector(
+    "span.location-value"
+  ) as HTMLSpanElement;
+  const utcSpan = document.querySelector("span.utc-value") as HTMLSpanElement;
+  const ispSpan = document.querySelector("span.isp-value") as HTMLSpanElement;
+
+  //Inicialización del mapa
+  var map = L.map("map").setView([43.731493, 7.415073], 18);
+  //Icono del mapa
+  var icon = L.icon({
+    iconUrl: "/images/tracker/icon-location.svg",
+  });
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  L.marker([43.73149, 7.41507], { icon: icon }).addTo(map);
+
+  // Evento al hacer click en el botón de búsqueda de IP
+  action?.addEventListener("click", async () => {
+    const ip = document.querySelector("input")?.value;
+    if (ip) {
+      if (!isValidIPv4(ip)) {
+        alert("Invalid IP address");
+        return;
+      }
+
+      console.log("click");
+
+      try {
+        setResult("loading", { ip, isp: null });
+        const { isp, location } = await getIp(ip);
+        setResult("loading", { ip, location, isp });
+      } catch (error) {
+        setResult("error", { ip, isp: null });
+        console.error(error);
+      }
+
+      L.marker([location.lat, location.lng], { icon: icon }).addTo(map);
+      map.flyTo([location.lat, location.lng], 12);
+    }
+  });
+</script>
