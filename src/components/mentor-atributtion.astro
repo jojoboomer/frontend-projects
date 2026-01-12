@@ -1,0 +1,64 @@
+---
+interface Props {
+  styles?: string;
+}
+const { styles } = Astro.props;
+---
+
+<footer class={styles}>
+  <div class="footer-content">
+    <p class="footer-text">
+      Challenge by <a
+        href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank"
+        >Frontend Mentor
+      </a>
+    </p>
+    <div class="separator"></div>
+    <p class="footer-text">
+      Coded by <a href="https://jojoboomer.github.io/">
+        José Joel Labrada Carmenate</a
+      >
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer:hover {
+    opacity: 1;
+  }
+  footer {
+    position: absolute;
+    opacity: 0.5;
+    bottom: 0px;
+    z-index: 1000;
+    .separator {
+      background-color: black;
+      width: 1px;
+      height: 14px;
+    }
+    .footer-content {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px;
+      background-color: hsla(245, 77%, 86%, 0.496);
+    }
+    .footer-text {
+      font-size: 12px;
+      a {
+        color: hsl(228, 45%, 44%);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    footer {
+      width: 100%;
+      opacity: 1;
+      .footer-content {
+        justify-content: center;
+      }
+    }
+  }
+</style>
