@@ -1,0 +1,64 @@
+---
+import { css } from "@styled-system/css";
+
+interface Props {
+  id?: string;
+  name?: string;
+  placeholder?: string;
+  type?: astroHTML.JSX.HTMLInputTypeAttribute;
+  requiredMsg?: string;
+  incorrectMsg?: string;
+}
+const {
+  id,
+  name,
+  placeholder,
+  type = "text",
+  requiredMsg,
+  incorrectMsg,
+} = Astro.props;
+---
+
+<div class={css({ w: "full" })}>
+  <div id=`${id}-container` class={css({ position: "relative", w: "full" })}>
+    <input id={id} name={name} type={type} placeholder={placeholder} />
+    <svg height="28" width="28" viewBox="0 0 24 24" class="error-icon hidden">
+      <circle cx="12" cy="12" r="10" fill="#ff7a7a"></circle>
+      <line x1="12" y1="7" x2="12" y2="13" stroke="white" stroke-width="2"
+      ></line>
+      <circle cx="12" cy="17" r="1" fill="white"></circle>
+    </svg>
+  </div>
+  <span
+    aria-label={`${id}-required`}
+    class:list={[
+      css({
+        display: "block",
+        width: "100%",
+        textAlign: "right",
+        color: "#ff7a7a",
+        fontSize: "0.65rem",
+        marginTop: "0.5rem",
+        fontStyle: "italic",
+      }),
+      "hidden",
+      "requiredMsg",
+    ]}>{requiredMsg}</span
+  >
+  <span
+    aria-label={`${id}-incorrect`}
+    class:list={[
+      css({
+        display: "block",
+        width: "100%",
+        textAlign: "right",
+        color: "#ff7a7a",
+        fontSize: "0.65rem",
+        marginTop: "0.5rem",
+        fontStyle: "italic",
+      }),
+      "hidden",
+      "incorrectMsg",
+    ]}>{incorrectMsg}</span
+  >
+</div>

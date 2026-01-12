@@ -1,0 +1,132 @@
+---
+import MentorAtributtion from "@/components/mentor-atributtion.astro";
+import Base from "@/layout/base.astro";
+import Input from "@/features/singup-component/Input.astro";
+import { css } from "@styled-system/css";
+import {
+  main,
+  sectionSingUp,
+  sectionText,
+} from "@/features/singup-component/styles";
+---
+
+<Base
+  title={"Frontend Mentor | Intro component with sign up form"}
+  favicon={"./favicon-mentor-32x32.png"}
+>
+  <main class={main}>
+    <div class={sectionText}>
+      <h2>Learn to code by watching others</h2>
+      <p>
+        See how experienced developers solve problems in real-time. Watching
+        scripted tutorials is great, but understanding how developers think is
+        invaluable.
+      </p>
+    </div>
+    <div class={sectionSingUp}>
+      <div class={"promotion"}>
+        <strong>Try it free 7 days</strong> then $20/mo. thereafter
+      </div>
+      <form class={"form"} novalidate>
+        <Input
+          id="firstName"
+          name="firstName"
+          placeholder="First Name"
+          requiredMsg="First name cannot be empty"
+        />
+        <Input
+          id="lastName"
+          name="lastName"
+          placeholder="Last Name"
+          requiredMsg="Last name cannot be empty"
+        />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          requiredMsg="Email address cannot be empty"
+          incorrectMsg="Looks like this is not an email"
+        />
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          requiredMsg="Password cannot be empty"
+        />
+        <button type="submit" class={"btn-claim"}>Claim your free trial</button>
+        <span class="terms"
+          >By clicking the button, you are agreeing to our <a href=""
+            >Terms and Services</a
+          ></span
+        >
+      </form>
+    </div>
+  </main>
+  <Fragment slot="footer">
+    <MentorAtributtion />
+  </Fragment>
+</Base>
+
+<style is:global>
+  .hidden {
+    display: none;
+  }
+  .error-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+</style>
+
+<script>
+  const form = document.querySelector("form");
+
+  form?.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target?.value !== "" && target?.classList.contains("error")) {
+      target.classList.remove("error");
+      const id = target.id;
+      document
+        .querySelector(`[aria-label="${id}-incorrect"]`)
+        ?.classList.add("hidden");
+      document
+        .querySelector(`[aria-label="${id}-required"]`)
+        ?.classList.add("hidden");
+      document
+        .querySelector(`div[id='${id}-container']  svg`)
+        ?.classList.add("hidden");
+    }
+  });
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const fieldsArray = Array.from(formData.entries());
+    fieldsArray.forEach((field) => {
+      const $field = document.querySelector(`#${field[0]}`);
+      const $fieldContainer = document.querySelector(`#${field[0]}-container`);
+      const $errorLabel = document.querySelector(
+        `[aria-label="${field[0]}-required"]`
+      );
+
+      if (field[1] === "") {
+        $field?.classList.add("error");
+        $fieldContainer?.querySelector("svg")?.classList.remove("hidden");
+        $errorLabel?.classList.remove("hidden");
+      }
+
+      if (field[0] === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(field[1].toString()) && field[1] !== "") {
+          document
+            .querySelector(`[aria-label="${field[0]}-incorrect"]`)
+            ?.classList.remove("hidden");
+          $field?.classList.add("error");
+        }
+      }
+    });
+  });
+</script>
