@@ -43,7 +43,7 @@ export interface State {
 
 // --- Átomo Persistente Agrupado (única llave en localStorage) ---
 // Este átomo contiene todo el estado que queremos persistir juntos.
-const $internalCartStore = persistentAtom<State>('cart-store-single-key:', {
+const $internalCartStore = persistentAtom<State>('cart-app-state:', {
     // Valor inicial
     products: datajson,
     cart: [],
