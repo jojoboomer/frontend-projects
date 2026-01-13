@@ -30,8 +30,8 @@ export const TECH = {
 };
 export const ALL_TECH = Object.values(TECH);
 
-const PROD_SITE = "http://localhost:4321";
-const SITE = PROD_SITE;//"https://frontend-projects-self.vercel.app";
+const PROD_SITE = "http://localhost:4321/";
+export const SITE = "https://frontend-projects-self.vercel.app/";
 const REPO = "https://github.com/jojoboomer/frontend-projects";
 
 export const PROJECTS: Project[] = [
@@ -40,7 +40,7 @@ export const PROJECTS: Project[] = [
     level: "newbie",
     img: "/images/nft/desktop-preview.jpg",
     tech: [TECH.astro, TECH.panda],
-    link: SITE + "/nft-card",
+    link: SITE + "nft-card",
     code: REPO,
     description: "Simple component using ASTRO + PandaCSS",
     active: true,
@@ -50,7 +50,7 @@ export const PROJECTS: Project[] = [
     level: "junior",
     img: "images/cart/preview.jpg",
     tech: [TECH.astro, TECH.panda, TECH.react],
-    link: SITE + "/shoping-cart",
+    link: SITE + "shoping-cart",
     code: REPO,
     description:
       "A product page with cart using ASTRO + PandaCSS. Focus on the cart functionality using vanilla JS",
@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     level: "junior",
     img: "/images/singup-component/desktop-preview.jpg",
     tech: [TECH.astro, TECH.panda],
-    link: SITE + "/singup-component",
+    link: SITE + "singup-component",
     code: REPO,
     description: "Simple component using ASTRO + PandaCSS",
     active: true,
@@ -71,7 +71,7 @@ export const PROJECTS: Project[] = [
     level: "intermediate",
     img: "images/todo/desktop-preview.jpg",
     tech: [TECH.astro, TECH.panda, TECH.react],
-    link: SITE + "/todo",
+    link: SITE + "todo",
     code: REPO,
     description:
       "The classic todo app with a few twists! This app includes a dark/light theme toggle and drag & drop reordering for anyone wanting an extra test.",
@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     level: "intermediate",
     img: "images/tracker/desktop-preview.jpg",
     tech: [TECH.astro, TECH.panda, TECH.react],
-    link: SITE + "/ip-tracker",
+    link: SITE + "ip-tracker",
     code: REPO,
     description:
       "This project is a responsive IP address and domain geolocation tracker application. It integrates the IPify API to fetch geographic data for any entered IP address or domain and uses LeafletJS to dynamically render an interactive map pinpointing the location. The app features a clean, user-friendly interface where key information—such as IP address, location, timezone, and ISP—is displayed in a structured card layout. Upon initial page load, it automatically detects and displays the user's own IP address and location on the map. Users can search for any other IP address or domain to see updated information and map view. The interface is fully responsive, adapting its layout for optimal viewing on all device screen sizes, and includes hover states for all interactive elements like the search button and input field.",
