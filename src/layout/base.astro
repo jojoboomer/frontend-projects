@@ -1,12 +1,16 @@
 ---
-import { css } from "@styled-system/css";
 import "@/styles/global.css";
+import ArrowLeft from "@lucide/astro/icons/arrow-big-left";
+import { SITE } from "@/lib/constants";
 
 interface Props {
   title?: string;
   favicon?: string;
 }
+
 const { title = "Solution Demo", favicon } = Astro.props;
+
+const isHome = Astro.url.href == SITE;
 ---
 
 <html lang="en">
@@ -21,41 +25,71 @@ const { title = "Solution Demo", favicon } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen">
+  <body class="relative min-h-screen">
     <slot />
     <footer>
       <slot name="footer" />
     </footer>
-  </body>
-</html>
-
-<style>
-  footer {
-    position: relative;;
-  }
-</style>
-
-<script is:inline>
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
+    {
+      !isHome && (
+        <a href="/" class="back-button" >
+          <ArrowLeft />
+        </a>
+      )
     }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
+  </body><style>
+    footer {
+      position: relative;
+    }
+    .back-button {
+      position: fixed;
+      opacity: 0.5;
+      bottom: 16px;
+      right: 16px;
+      z-index: 1000;
+      --tw-shadow: 4px 4px 0 0 var(--tw-shadow-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow),
+        var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      aspect-ratio: 1/1;
+      padding: 8px;
+      background-color: white;
+      transition: all 150ms ease-in-out;
+      cursor: pointer;
+      border: 2px black solid;
+    }
+    .back-button:hover {
+      opacity: 1;
+      --tw-shadow: none;
+      box-shadow: none;
+      translate: 4px 4px;
+    }
+  </style>
 
-  const isDark = getThemePreference() === "dark";
-  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+  <script is:inline>
+    const getThemePreference = () => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    };
 
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
-</script>
+    const isDark = getThemePreference() === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    if (typeof localStorage !== "undefined") {
+      const observer = new MutationObserver(() => {
+        const isDark = document.documentElement.classList.contains("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    }
+  </script>
+</html>
