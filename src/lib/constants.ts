@@ -1,12 +1,12 @@
 export interface Project {
   title: string;
-  level?: string;
-  img?: string;
-  tech?: Tech[];
-  link?: string;
-  code?: string;
-  description?: string;
-  active: boolean;
+  level: string;
+  img: string;
+  tech: Tech[];
+  link: string;
+  code: string;
+  description: string;
+  active?: boolean;
 }
 export type Tech = {
   id: string;
@@ -30,8 +30,8 @@ export const TECH = {
 };
 export const ALL_TECH = Object.values(TECH);
 
-const SITE = "https://frontend-projects-self.vercel.app/";
 const PROD_SITE = "http://localhost:4321";
+const SITE = PROD_SITE;//"https://frontend-projects-self.vercel.app";
 const REPO = "https://github.com/jojoboomer/frontend-projects";
 
 export const PROJECTS: Project[] = [
@@ -119,12 +119,3 @@ export const PROJECTS: Project[] = [
     active: true,
   },
 ];
-
-export const IP_API_URL = "https://geo.ipify.org/api/v2/";
-// apiKey
-// ipAddress
-// domain
-// email
-// escapedUnicode
-
-
