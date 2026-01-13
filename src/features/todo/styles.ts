@@ -213,9 +213,6 @@ export const listFooter = css({
   '& input[type="radio"]': {
     appearance: "none",
   },
-  '& input[type="radio"]:checked label ': {
-    color: "todo.blue",
-  },
 });
 //Icon to delete task
 export const deleteBtn = css({

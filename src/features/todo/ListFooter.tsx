@@ -33,31 +33,31 @@ export const Filters = () => {
     <div className="filter">
       <input
         type="radio"
+        
         id="all"
         name="filter"
         value="all"
-        checked={status == 'all'}
         onChange={(e) => setFilters({ status: "all" })}
       />
-      <label htmlFor="all">All</label>
+      <label htmlFor="all" className={css(status == 'all' && {color: 'todo.blue'})}>All</label>
       <input
         type="radio"
+        
         id="active"
         name="filter"
         value="active"
-        checked={status == 'active'}
         onChange={(e) => setFilters({ status: "active" })}
       />
-      <label htmlFor="active">Active</label>
+      <label htmlFor="active" className={css(status == 'active' && {color: 'todo.blue'})}>Active</label>
       <input
         type="radio"
+        
         id="completed"
         name="filter"
         value="completed"
-        checked={status == 'completed'}
         onChange={(e) => setFilters({ status: "completed" })}
       />
-      <label htmlFor="completed">Completed</label>
+      <label htmlFor="completed" className={css(status == 'completed' && {color: 'todo.blue'})}>Completed</label>
     </div>
   );
 };
