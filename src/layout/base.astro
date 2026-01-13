@@ -10,7 +10,7 @@ interface Props {
 
 const { title = "Solution Demo", favicon } = Astro.props;
 
-const isHome = Astro.url.href == SITE;
+const isHome = Astro.url.pathname == '/';
 ---
 
 <html lang="en">
